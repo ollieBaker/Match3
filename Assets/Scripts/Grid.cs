@@ -78,10 +78,13 @@ public class Grid : MonoBehaviour {
 		//Vector3 tempPoint = new Vector3(tile1.transform.position.x, tile1.transform.position.y, tile1.transform.position.z );
 		Vector2 tempColumRow = new Vector2(tile1.column, tile1.row);
 
-		iTween.MoveTo(tile1.gameObject, tile2.transform.position, 0.3f);
+		iTween.MoveTo(tile1.gameObject, iTween.Hash(
+			"position", tile2.transform.position,
+			"time", 0.3f,
+			"onComplete", "check",
+			"onCompleteTarget", this.gameObject
+			));
 		iTween.MoveTo(tile2.gameObject, tile1.transform.position, 0.3f);
-		//Actuate.tween(selectedItem, TWEEN_TIME, {x: target.x, y: target.y});
-		//Actuate.tween(target, TWEEN_TIME, {x: tempPoInt.x, y: tempPoInt.y});
 
 		tile1.column = tile2.column;
 		tile1.row = tile2.row;
@@ -89,6 +92,10 @@ public class Grid : MonoBehaviour {
 		tile2.row = (int)tempColumRow.y;
 		
 
+	}
+
+	void check() {
+		Debug.Log("check for lines");
 	}
 
 	bool areNeighbours(Tile selectedItem, Tile target) {
