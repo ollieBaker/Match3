@@ -5,16 +5,18 @@ public delegate void TileSelected(Tile tile);
 
 public class Tile : MonoBehaviour {
 
-	private int id;
+	public int id;
 	private int size;
 	private int colour;
 	private bool selected = false;
 	public int row;
 	public int column;
 
+	public bool isDead = false;
+
 	public event TileSelected OnTileSelected;
 
-	private Vector2 dir;
+	public Vector2 dir = new Vector2(0,0);
 	private Material material;
 	public GameObject tile;
 
@@ -24,11 +26,16 @@ public class Tile : MonoBehaviour {
 	}
 
 	public void init (int id, Material material, int col, int row) {
-		this.id = id;
 		this.column = col;
 		this.row = row;
+		setMaterial(id, material);
+	}
+
+	public void setMaterial(int id, Material material) {
+		this.id = id;
 		this.renderer.material = material;
 	}
+
 
 	void OnMouseDown () {
 		if(selected) {
